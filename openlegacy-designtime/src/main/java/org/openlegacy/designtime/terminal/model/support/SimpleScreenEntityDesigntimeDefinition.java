@@ -46,6 +46,8 @@ public class SimpleScreenEntityDesigntimeDefinition extends SimpleScreenEntityDe
 
 	private Collection<TerminalSnapshot> allSnapshots;
 
+	private boolean generateAspect = true;
+
 	@Override
 	public void setEntityName(String entityName) {
 		super.setEntityName(entityName);
@@ -158,5 +160,13 @@ public class SimpleScreenEntityDesigntimeDefinition extends SimpleScreenEntityDe
 
 	public void setAllSnapshots(Collection<TerminalSnapshot> allSnapshots) {
 		this.allSnapshots = allSnapshots;
+	}
+
+	public boolean isGenerateAspect() {
+		return generateAspect;
+	}
+
+	public void setGenerateAspect(boolean generateAspect) {
+		this.generateAspect = generateAspect;
 	}
 }

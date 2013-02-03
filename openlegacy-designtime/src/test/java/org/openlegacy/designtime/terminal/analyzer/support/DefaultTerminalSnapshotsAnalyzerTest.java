@@ -9,6 +9,8 @@ import org.openlegacy.definitions.AutoCompleteFieldTypeDefinition;
 import org.openlegacy.definitions.BooleanFieldTypeDefinition;
 import org.openlegacy.definitions.DateFieldTypeDefinition;
 import org.openlegacy.designtime.terminal.analyzer.modules.navigation.ScreenNavigationDesignTimeDefinition;
+import org.openlegacy.designtime.terminal.generators.ScreenPojosAjGenerator;
+import org.openlegacy.designtime.terminal.model.ScreenEntityDesigntimeDefinition;
 import org.openlegacy.modules.messages.Messages;
 import org.openlegacy.terminal.TerminalSnapshot;
 import org.openlegacy.terminal.actions.TerminalActions.ENTER;
@@ -28,9 +30,18 @@ import org.openlegacy.terminal.support.SimpleTerminalPosition;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import japa.parser.JavaParser;
+import japa.parser.ParseException;
+import japa.parser.ast.CompilationUnit;
+import japa.parser.ast.body.ClassOrInterfaceDeclaration;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import junit.framework.Assert;
 
@@ -285,4 +296,26 @@ public class DefaultTerminalSnapshotsAnalyzerTest extends AbstractAnalyzerTest {
 		assertScreenContent(simpleScreenDefinition, "SimpleScreenValues.java.expected");
 	}
 
+	@Inject
+	ScreenPojosAjGenerator screenPojosAjGenerator;
+
+	@Test
+	public void testNoAspectGeneration() throws TemplateException, IOException, ParseException {
+
+		Map<String, ScreenEntityDefinition> screenEntitiesDefinitions = analyze("SimpleScreen.xml");
+
+		ScreenEntityDesigntimeDefinition screenDefinition = (ScreenEntityDesigntimeDefinition)screenEntitiesDefinitions.get("SimpleScreen");
+		screenDefinition.setGenerateAspect(false);
+		assertScreenContent(screenDefinition, "noAspect/SimpleScreen.java.expected");
+
+		// part 2 check no aspect is required.
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		InputStream input = getClass().getResourceAsStream("noAspect/SimpleScreen.java.expected");
+
+		CompilationUnit compilationUnit = JavaParser.parse(input);
+		screenPojosAjGenerator.generateScreenEntity(compilationUnit,
+				(ClassOrInterfaceDeclaration)compilationUnit.getTypes().get(0), baos);
+		Assert.assertEquals(0, baos.toByteArray().length);
+	}
 }

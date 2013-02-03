@@ -38,15 +38,41 @@ import ${referredClass};
 					</#list> }						
 					</#if>)
 </#if>
+<#if generateAspect = false>
+ public class ${entityName} implements ScreenEntity {
+ 
+ private String focusField;
+ <#else>
 public class ${entityName} {
     
+</#if>
 	<#list sortedFields as field>
 	
 	<@fieldTypes field=field />
 	@ScreenField(<#if field.key>key = true, </#if>row = ${field.position.row}, column = ${field.position.column}<#if field.length &gt; 0>, endColumn= ${field.endPosition.column}</#if><#if field.labelPosition??> ,labelColumn= ${field.labelPosition.column}</#if><#if field.password> ,password= true</#if><#if field.editable> ,editable= true</#if><#if field.multyLine> ,endRow= ${field.endPosition.row}</#if><#if field.rectangle> ,rectangle= true</#if><#if field.type??> ,fieldType=${field.type.simpleName}.class</#if><#if field.displayName??> ,displayName = "${field.displayName}"</#if><#if field.sampleValue?? && field.sampleValue != "">, sampleValue = "${field.sampleValue}"</#if><#if field.helpText?? && field.helpText != "">, helpText = "${field.helpText}"</#if>)
     private ${field.javaTypeName} ${field.name?uncap_first};
+    <#if generateAspect = false>
+    
+    public ${field.javaTypeName} get${field.name?cap_first}(){
+    	return this.${field.name};
+    }
+    
+    <#if field.editable>
+    public void set${field.name?cap_first}( ${field.javaTypeName} ${field.name}){
+    	this.${field.name} = ${field.name};
+    }
+    </#if >
+    </#if>
 	</#list>	
 
+	<#if generateAspect = false>
+	public String getFocusField(){
+    	return focusField;
+    }
+    public void setFocusField(String focusField){
+    	this.focusField = focusField;
+    }
+	</#if>
  	<#list childEntitiesDefinitions as childScreen>
     private ${childScreen.entityName} ${childScreen.entityName?uncap_first};
 	</#list>	
