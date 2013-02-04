@@ -104,3 +104,9 @@
 	-moz-box-shadow: #ddd 0px 2px 4px;
 	box-shadow: #ddd 0px 2px 4px;
 }
+
+.search{
+	margin-left: 5px;
+	vertical-align: middle;
+	cursor: pointer; 
+}

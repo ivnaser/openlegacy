@@ -8,16 +8,22 @@
 	<jsp:directive.attribute name="data" type="java.util.Collection" required="true" rtexprvalue="true" description="The collection to be displayed in the table" />
 	<jsp:directive.attribute name="property" type="java.lang.String" required="true" rtexprvalue="true" description="The table name" />
 	<jsp:directive.attribute name="actionsAsIcons" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Whether to show table actions as icons (using CSS which matches the action alias)" />
+	<jsp:directive.attribute name="window" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Whether the table is displayed in window" />
 	
 	<jsp:output omit-xml-declaration="yes" />
 	
 	<c:if test="${empty formName}">
 		${ol:throwException("formName not found. Probably ol:table tag is not within ol:form")}
 	</c:if>
-	
+
 	<c:set var="actionsCss" value="" />
 	<c:if test="${actionsAsIcons}">
 		<c:set var="actionsCss" value="rbtn" />
+	</c:if>
+
+	<c:set var="contentPaneId" value="container" />
+	<c:if test="${window == true}">
+		<c:set var="contentPaneId" value="window_container" />
 	</c:if>
 	
 	<c:set var="tableDefinition"
@@ -38,7 +44,7 @@
 								<c:when test="${column.selectionField}">
 									<c:choose>
 										<c:when test="${fn:length(tableDefinition.actions) == 0}">
-												<a href="javascript:closeAndUpdateLookup('${item[tableDefinition.keyFieldNames[0]]}');" class="${actionsCss}" title="Select ">Select</a>
+												<a href="javascript:closeAndUpdateLookup('${item[tableDefinition.keyFieldNames[0]]}','${item[tableDefinition.mainDisplayField]}');" class="${actionsCss}" title="Select ">Select</a>
 										</c:when>
 										<c:otherwise>
 											<c:forEach items="${tableDefinition.actions}" var="action" varStatus="counter">
@@ -69,7 +75,7 @@
 			</div>
 			<div class="next">
 				<a
-					href="javascript:doAjaxPost('${formName}','container','next','body')">
+					href="javascript:doAjaxPost('${formName}','${contentPaneId}','next','body')">
 					<span class="arrow">
 						<!---->
 					</span> <span>Next</span>

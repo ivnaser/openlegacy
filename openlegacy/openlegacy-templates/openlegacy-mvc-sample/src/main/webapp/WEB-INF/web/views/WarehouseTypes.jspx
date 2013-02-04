@@ -5,7 +5,7 @@
 	<jsp:output omit-xml-declaration="yes" /> 
 
 	<ol:form model="warehouseTypes">
-					<ol:table data="${warehouseTypes.warehouseTypesRecords}" property="warehouseTypesRecords" />
+					<ol:table data="${warehouseTypes.warehouseTypesRecords}" property="warehouseTypesRecords" window="true" />
 		
 	</ol:form>
 </jsp:root>

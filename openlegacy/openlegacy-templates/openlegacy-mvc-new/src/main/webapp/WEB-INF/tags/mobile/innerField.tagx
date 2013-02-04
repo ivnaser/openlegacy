@@ -68,7 +68,7 @@
 									registry.byId('calPicker').show(input, ['above-centered','below-centered','after','before']);
 								});" />
 					</c:when>
-					<c:when test="${type == 'autocomplete'}">
+					<c:when test="${type == 'fieldWithValues'}">
 						<input id="${fieldDefinition.name}" type="text" 
 							onclick="require(['dojo/dom'], function(dom){eval(dom.byId('${fieldDefinition.name}Script').innerHTML);});" />
 						<div id="${fieldDefinition.name}Script" style="display: none">
@@ -157,5 +157,5 @@
 				<ol:span cssClass="readonlyField ${cssClass}" path="${name}" cssStyle="${style}" />
 			</c:otherwise>
 		</c:choose>
-	</div>
+	</div>l
 </jsp:root>

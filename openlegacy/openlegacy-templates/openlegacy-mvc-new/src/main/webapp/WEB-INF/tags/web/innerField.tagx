@@ -111,7 +111,7 @@
 								});
 							</script>
 							</c:when>
-							<c:when test="${type == 'autocomplete'}">
+							<c:when test="${type == 'fieldWithValues'}">
 								<script language="JavaScript" type="text/javascript">
 							require(["dojo/data/ItemFileReadStore",
 									"dijit/form/FilteringSelect"]);

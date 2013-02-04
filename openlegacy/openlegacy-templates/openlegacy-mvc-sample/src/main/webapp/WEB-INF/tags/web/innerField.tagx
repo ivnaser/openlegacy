@@ -42,11 +42,11 @@
 		<c:set var="style"
 			value="${style};position:absolute;top:${top};left:${left}" />
 	</c:if>
+	
 	<c:set var="width" value="${maxlength*10+10}" />
 	<c:if test="${fn:contains(style,'width')}">
 		<c:set var="width" value="0" />
 	</c:if>
-	
 	<c:if test="${rightToLeft}">
 		<c:set var="style"
 			value="${style};direction:rtl;unicode-bidi: bidi-override;" />
@@ -97,16 +97,19 @@
 								});
 							</script>
 							</c:when>
-							<c:when test="${type == 'autocomplete'}">
+							<c:when test="${type == 'fieldWithValues'}">
 								<c:choose>
-									<c:when test="${fieldDefinition.displayType == 'LookupWindow'}">
+									<c:when test="${fieldDefinition.fieldTypeDefinition.asWindow}">
 										<c:set var="windowUrl" value="${fieldDefinition.fieldTypeDefinition.sourceEntityClassName}" />
-										<c:set var="windowWidth" value="350" />
-										<c:set var="windowHeight" value="350" />
+										<c:if test="${width &gt; 0}"><c:set var="widthString" value="width:${width}px;"/></c:if>
 										<form:input type="text" id="${name}" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="promptMessage:'${helpText}'"
 											maxlength="${maxlength}" path="${name}" cssStyle="${widthString}${style}"
 											cssClass="${cssClass}" />
-										<input type="button" onclick="openLookupDialog('${name}','${pageContext.request.contextPath}/${windowUrl}',${windowWidth},${windowHeight})" value="?" />										
+										<c:if test="${not empty fieldDefinition.fieldTypeDefinition.displayFieldName}">
+											<ol:span cssClass="readonlyField ${cssClass}" path="${fieldDefinition.fieldTypeDefinition.displayFieldName}"
+												cssStyle="${style}" />
+										</c:if>
+										<img src="${pageContext.request.contextPath}/icons/search.png" onclick="openLookupDialog('${name}','${fieldDefinition.fieldTypeDefinition.displayFieldName}','${pageContext.request.contextPath}/${windowUrl}','width:350px;height:300px')" class="search" />
 									</c:when>
 									<c:otherwise>
 										<script language="JavaScript" type="text/javascript">
