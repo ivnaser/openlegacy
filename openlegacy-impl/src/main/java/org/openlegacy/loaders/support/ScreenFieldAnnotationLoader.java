@@ -68,16 +68,19 @@ public class ScreenFieldAnnotationLoader extends AbstractFieldAnnotationLoader {
 		screenFieldDefinition.setPosition(position);
 
 		if (fieldAnnotation.endColumn() == 0) {
-			if (screenEntityDefinition.getSnapshot() == null) {
+			// might be null for screen part
+			if (screenEntityDefinition == null || screenEntityDefinition.getSnapshot() == null) {
 				screenFieldDefinition.setLength(0);
 			} else {
-				TerminalField terminalField = screenEntityDefinition.getSnapshot().getField(position);
-				if (terminalField != null) {
-					int length = terminalField.getLength();
-					screenFieldDefinition.setLength(length);
-					logger.debug(MessageFormat.format(
-							"Applying terminal field length {0} to field {1}.{2} which has no end column defined", length,
-							screenEntityDefinition.getEntityName(), field.getName()));
+				if (screenEntityDefinition != null && screenEntityDefinition.getSnapshot() != null) {
+					TerminalField terminalField = screenEntityDefinition.getSnapshot().getField(position);
+					if (terminalField != null) {
+						int length = terminalField.getLength();
+						screenFieldDefinition.setLength(length);
+						logger.debug(MessageFormat.format(
+								"Applying terminal field length {0} to field {1}.{2} which has no end column defined", length,
+								screenEntityDefinition.getEntityName(), field.getName()));
+					}
 				}
 			}
 		} else {
