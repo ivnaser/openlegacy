@@ -1,6 +1,7 @@
 package org.openlegacy.terminal.samples.model;
 
 import org.openlegacy.annotations.screen.Action;
+import org.openlegacy.annotations.screen.DisplayType;
 import org.openlegacy.annotations.screen.Identifier;
 import org.openlegacy.annotations.screen.ScreenActions;
 import org.openlegacy.annotations.screen.ScreenDateField;
@@ -9,6 +10,7 @@ import org.openlegacy.annotations.screen.ScreenField;
 import org.openlegacy.annotations.screen.ScreenFieldValues;
 import org.openlegacy.annotations.screen.ScreenIdentifiers;
 import org.openlegacy.annotations.screen.ScreenNavigation;
+import org.openlegacy.terminal.DisplayTypes;
 import org.openlegacy.terminal.actions.TerminalAction.AdditionalKey;
 import org.openlegacy.terminal.actions.TerminalActions;
 
@@ -29,6 +31,7 @@ public class WarehouseDetails {
 	@ScreenField(row = 7, column = 34, endColumn = 73, labelColumn = 2, editable = true, displayName = "Warehouse Description", sampleValue = "Discount warehouse")
 	private String warehouseDescription;
 
+	@DisplayType(displayType = DisplayTypes.LookupWindow)
 	@ScreenFieldValues(sourceScreenEntity = WarehouseTypes.class)
 	@ScreenField(row = 8, column = 34, endColumn = 35, labelColumn = 2, editable = true, displayName = "Warehouse Type", sampleValue = "GL")
 	private String warehouseType;

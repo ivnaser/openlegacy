@@ -12,6 +12,7 @@ package org.openlegacy.terminal.definitions;
 
 import org.openlegacy.annotations.screen.ScreenField;
 import org.openlegacy.definitions.FieldDefinition;
+import org.openlegacy.terminal.DisplayTypes;
 import org.openlegacy.terminal.FieldAttributeType;
 import org.openlegacy.terminal.TerminalField;
 import org.openlegacy.terminal.TerminalPosition;
@@ -97,4 +98,6 @@ public interface ScreenFieldDefinition extends FieldDefinition, TerminalPosition
 	 * @return a regular expression used for negative filtering (unless)
 	 */
 	String getUnlessFilter();
+
+	DisplayTypes getDisplayType();
 }

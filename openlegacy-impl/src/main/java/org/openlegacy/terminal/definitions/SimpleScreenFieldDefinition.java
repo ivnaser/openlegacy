@@ -13,6 +13,7 @@ package org.openlegacy.terminal.definitions;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.openlegacy.FieldType;
 import org.openlegacy.definitions.support.AbstractFieldDefinition;
+import org.openlegacy.terminal.DisplayTypes;
 import org.openlegacy.terminal.FieldAttributeType;
 import org.openlegacy.terminal.TerminalField;
 import org.openlegacy.terminal.TerminalPosition;
@@ -47,6 +48,8 @@ public class SimpleScreenFieldDefinition extends AbstractFieldDefinition<ScreenF
 	private boolean rightToLeft;
 	private String whenFilter;
 	private String unlessFilter;
+
+	private DisplayTypes displayType;
 
 	public SimpleScreenFieldDefinition() {
 		super();
@@ -207,5 +210,13 @@ public class SimpleScreenFieldDefinition extends AbstractFieldDefinition<ScreenF
 
 	public void setUnlessFilter(String unlessFilter) {
 		this.unlessFilter = unlessFilter;
+	}
+
+	public DisplayTypes getDisplayType() {
+		return displayType;
+	}
+
+	public void setDisplayType(DisplayTypes displayType) {
+		this.displayType = displayType;
 	}
 }

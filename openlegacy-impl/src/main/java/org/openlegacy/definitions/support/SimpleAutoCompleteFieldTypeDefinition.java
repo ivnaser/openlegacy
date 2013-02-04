@@ -81,6 +81,9 @@ public class SimpleAutoCompleteFieldTypeDefinition implements AutoCompleteFieldT
 	}
 
 	public String getSourceEntityClassName() {
-		return sourceEntityClassName;
+		if (sourceEntityClassName != null) {
+			return sourceEntityClassName;
+		}
+		return sourceEntityClass.getSimpleName();
 	}
 }
