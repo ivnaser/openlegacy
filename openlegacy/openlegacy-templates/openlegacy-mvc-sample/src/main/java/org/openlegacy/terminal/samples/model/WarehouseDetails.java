@@ -29,7 +29,7 @@ public class WarehouseDetails {
 	@ScreenField(row = 7, column = 34, endColumn = 73, labelColumn = 2, editable = true, displayName = "Warehouse Description", sampleValue = "Discount warehouse")
 	private String warehouseDescription;
 
-	@ScreenFieldValues(sourceScreenEntity = WarehouseTypes.class, asWindow = true, displayFieldName = "warehouseTypeName")
+	@ScreenFieldValues(sourceScreenEntity = WarehouseTypes.class)
 	@ScreenField(row = 8, column = 34, labelColumn = 2, editable = true, displayName = "Warehouse Type", sampleValue = "GL")
 	private String warehouseType;
 
