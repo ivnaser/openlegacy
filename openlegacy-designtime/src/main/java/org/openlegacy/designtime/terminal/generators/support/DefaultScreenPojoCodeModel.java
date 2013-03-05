@@ -153,7 +153,9 @@ public class DefaultScreenPojoCodeModel implements ScreenPojoCodeModel {
 				}
 
 			} else {
-				numberOfProperties++;
+				if (bodyDeclaration instanceof FieldDeclaration) {
+					numberOfProperties++;
+				}
 			}
 		}
 		if (numberOfProperties == numberOfGetters) {

@@ -347,7 +347,7 @@ public class DesignTimeExecuterImpl implements DesignTimeExecuter {
 		for (ScreenEntityDefinition screenEntityDefinition : screenDefinitions) {
 			((ScreenEntityDesigntimeDefinition)screenEntityDefinition).setPackageName(generateModelRequest.getPackageDirectory().replaceAll(
 					"/", "."));
-
+			((ScreenEntityDesigntimeDefinition)screenEntityDefinition).setGenerateAspect(generateModelRequest.isGenerateAspectJ());
 			EntityUserInteraction<ScreenEntityDefinition> entityUserInteraction = generateModelRequest.getEntityUserInteraction();
 			if (entityUserInteraction != null) {
 				boolean generate = entityUserInteraction.customizeEntity(screenEntityDefinition);
@@ -360,6 +360,7 @@ public class DesignTimeExecuterImpl implements DesignTimeExecuter {
 				File packageDir = new File(generateModelRequest.getSourceDirectory(), generateModelRequest.getPackageDirectory());
 
 				String entityName = screenEntityDefinition.getEntityName();
+
 				File targetJavaFile = new File(packageDir, MessageFormat.format("{0}.java", entityName));
 				if (targetJavaFile.exists()) {
 					boolean override = entityUserInteraction != null && entityUserInteraction.isOverride(targetJavaFile);

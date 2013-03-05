@@ -38,6 +38,7 @@ import japa.parser.ast.body.ClassOrInterfaceDeclaration;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -302,16 +303,23 @@ public class DefaultTerminalSnapshotsAnalyzerTest extends AbstractAnalyzerTest {
 	@Test
 	public void testNoAspectGeneration() throws TemplateException, IOException, ParseException {
 
-		Map<String, ScreenEntityDefinition> screenEntitiesDefinitions = analyze("SimpleScreen.xml");
+		List<String> tests = Arrays.asList("SimpleScreen", "TableScreen", "ItemDetails");
+		for (String test : tests) {
+			Map<String, ScreenEntityDefinition> screenEntitiesDefinitions = analyze(test + ".xml");
+			ScreenEntityDesigntimeDefinition screenDefinition = (ScreenEntityDesigntimeDefinition)screenEntitiesDefinitions.get(test);
+			screenDefinition.setGenerateAspect(false);
+			String templateName = "noAspect/" + test + ".java.expected";
+			assertScreenContent(screenDefinition, templateName);
 
-		ScreenEntityDesigntimeDefinition screenDefinition = (ScreenEntityDesigntimeDefinition)screenEntitiesDefinitions.get("SimpleScreen");
-		screenDefinition.setGenerateAspect(false);
-		assertScreenContent(screenDefinition, "noAspect/SimpleScreen.java.expected");
+			// part 2 check no aspect is required.
+			verifyNoAspect(templateName);
+		}
+	}
 
-		// part 2 check no aspect is required.
+	private void verifyNoAspect(String templateName) throws ParseException, IOException, TemplateException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		InputStream input = getClass().getResourceAsStream("noAspect/SimpleScreen.java.expected");
+		InputStream input = getClass().getResourceAsStream(templateName);
 
 		CompilationUnit compilationUnit = JavaParser.parse(input);
 		screenPojosAjGenerator.generateScreenEntity(compilationUnit,

@@ -8,7 +8,7 @@ import org.openlegacy.annotations.screen.*;
 				@Identifier(row = 4, column = 3, value = "Field A:"), 
 				@Identifier(row = 5, column = 3, value = "Field B:") 
 				})
- public class SimpleScreen implements ScreenEntity {
+ public class SimpleScreen implements org.openlegacy.terminal.ScreenEntity {
  
  private String focusField;
 	
